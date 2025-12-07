@@ -1,4 +1,7 @@
 package com.example.woltweb.repo;
 
-public interface BasicUserRepo {
+import com.example.woltweb.model.BasicUser;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BasicUserRepo extends JpaRepository<BasicUser, Integer> {
 }

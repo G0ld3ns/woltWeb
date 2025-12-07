@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,10 +21,13 @@ import java.util.List;
 
 public class BasicUser extends User{
     protected String address;
+    @JsonIgnore
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<FoodOrder> myOrders;
+    @JsonIgnore
     @OneToMany(mappedBy =  "commentOwner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Review> myReviews;
+    @JsonIgnore
     @OneToMany(mappedBy = "feedBack", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Review> feedback;
 
