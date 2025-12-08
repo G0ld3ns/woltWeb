@@ -4,4 +4,6 @@ import com.example.woltweb.model.BasicUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BasicUserRepo extends JpaRepository<BasicUser, Integer> {
+    BasicUser findByLoginAndPassword(String login, String password);
+
 }

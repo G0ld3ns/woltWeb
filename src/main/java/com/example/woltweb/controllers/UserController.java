@@ -33,21 +33,36 @@ public class UserController {
         return userRepo.getUserByLogin(login, psw);
     }
 
-    @PutMapping(value = "updateUser")
-    public @ResponseBody User updateUser(@RequestBody User user){
-        userRepo.save(user);
-        return userRepo.getReferenceById(user.getId());
-    }
+    //Sito man rodos nebereikia idk
+    //@PutMapping(value = "updateUser")
+    //public @ResponseBody User updateUser(@RequestBody User user){
+    //    userRepo.save(user);
+    //    return userRepo.getReferenceById(user.getId());
+    //}
 
     @PutMapping(value = "updateUserById/{id}")
-    public @ResponseBody User updateUserById(@RequestBody String info, @PathVariable int id){
-        User user = userRepo.findById(id).orElseThrow(()-> new RuntimeException("user not found"));
+    public @ResponseBody User updateUserById(@RequestBody String info, @PathVariable int id) {
+
+        User user = userRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("user not found"));
+
         Gson gson = new Gson();
-        Properties properties = gson.fromJson(info, Properties.class);
-        var name = properties.getProperty("name");
-        user.setName(name);
-        userRepo.save(user);
-        return userRepo.getReferenceById(user.getId());
+        Properties p = gson.fromJson(info, Properties.class);
+
+        // Update each field only if it exists in JSON
+        if (p.getProperty("login") != null)         user.setLogin(p.getProperty("login"));
+        if (p.getProperty("name") != null)          user.setName(p.getProperty("name"));
+        if (p.getProperty("surname") != null)       user.setSurname(p.getProperty("surname"));
+        if (p.getProperty("password") != null)      user.setPassword(p.getProperty("password"));
+        if (p.getProperty("phoneNumber") != null)   user.setPhoneNumber(p.getProperty("phoneNumber"));
+
+        if (p.getProperty("admin") != null)
+            user.setAdmin(Boolean.parseBoolean(p.getProperty("admin")));
+
+        // You should NOT update dateCreated
+        user.setDateUpdated(java.time.LocalDateTime.now());
+
+        return userRepo.save(user);
     }
 
     @PostMapping(value = "insertUser")
@@ -57,7 +72,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping(value = "deleteUser")
+    @DeleteMapping(value = "deleteUser/{id}")
     public @ResponseBody String deleteUser(@PathVariable int id){
         userRepo.deleteById(id);
         User user = userRepo.findById(id).orElse(null);

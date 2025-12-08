@@ -1,10 +1,7 @@
 package com.example.woltweb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 
+@DiscriminatorValue("BasicUser")
 public class BasicUser extends User{
     protected String address;
     @JsonIgnore

@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 
+
+@DiscriminatorValue("Driver")
 public class Driver extends User{
     private LocalDate bDate;
     @Enumerated(EnumType.STRING)
