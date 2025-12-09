@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,12 +22,16 @@ public class FoodOrder {
     protected int id;
     private  String name;
     private Double price;
+    @JsonIgnore
     @ManyToOne
     private BasicUser buyer;
+    @JsonIgnore
     @ManyToMany
     private List<Cuisine> cuisineList;
+    @JsonIgnore
     @OneToOne
     private Chat chat;
+    @JsonIgnore
     @ManyToOne
     private Restaurant restaurant;
     @Enumerated(EnumType.STRING)
@@ -69,7 +74,7 @@ public class FoodOrder {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public Double getPrice(double total) {
         return price;
     }
 
@@ -99,4 +104,5 @@ public class FoodOrder {
     public String toString() {
         return buyer + "'s ORDER: " +name + " - "  + price + "$ (From: " + restaurant + ")" + " -" + orderStatus + "-";
     }
+
 }

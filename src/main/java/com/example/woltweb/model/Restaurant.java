@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,10 @@ public class Restaurant extends User {
     private double deliveryFee;
     private LocalTime openingTime;
     private LocalTime closingTime;
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FoodOrder> foodOrders;
+    @JsonIgnore
     @OneToMany(mappedBy = "restaurantMenu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cuisine> menu;
 

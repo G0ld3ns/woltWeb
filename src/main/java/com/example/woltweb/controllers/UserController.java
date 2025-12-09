@@ -23,7 +23,7 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "validateUser")
+    @PostMapping(value = "validateUser")
     public @ResponseBody User getUserByCredentials(@RequestBody String info){
         System.out.println(info);
         Gson gson = new Gson();
@@ -49,7 +49,6 @@ public class UserController {
         Gson gson = new Gson();
         Properties p = gson.fromJson(info, Properties.class);
 
-        // Update each field only if it exists in JSON
         if (p.getProperty("login") != null)         user.setLogin(p.getProperty("login"));
         if (p.getProperty("name") != null)          user.setName(p.getProperty("name"));
         if (p.getProperty("surname") != null)       user.setSurname(p.getProperty("surname"));
@@ -59,7 +58,6 @@ public class UserController {
         if (p.getProperty("admin") != null)
             user.setAdmin(Boolean.parseBoolean(p.getProperty("admin")));
 
-        // You should NOT update dateCreated
         user.setDateUpdated(java.time.LocalDateTime.now());
 
         return userRepo.save(user);

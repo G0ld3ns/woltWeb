@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,16 +24,18 @@ public class Chat {
     private String name;
     private String chatText;
     private LocalDate dateCreated;
+    @JsonIgnore
     @OneToOne(mappedBy = "chat", cascade = CascadeType.ALL)
     private FoodOrder foodOrder;
+    @JsonIgnore
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> messages;
 
-    public Chat(String name, FoodOrder foodOrder) {
+    public Chat(String name, String chatText, FoodOrder foodOrder) {
         this.name = name;
-        this.foodOrder = foodOrder;
+        this.chatText = chatText;
         this.dateCreated = LocalDate.now();
-        this.messages = new ArrayList<>();
+        this.foodOrder = foodOrder;
     }
 
     public int getId() {

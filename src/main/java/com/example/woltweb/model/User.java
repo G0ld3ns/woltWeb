@@ -1,5 +1,6 @@
 package com.example.woltweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +27,9 @@ public class User implements Serializable {
     protected String name;
     protected String surname;
     protected String phoneNumber;
+    @JsonIgnore
     protected LocalDateTime dateCreated;
+    @JsonIgnore
     protected LocalDateTime dateUpdated;
     protected boolean isAdmin;
 
